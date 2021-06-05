@@ -6,8 +6,9 @@ for i in range(10): exp_type.append(21)
 for i in [8,10]: exp_type[i] = 24
 
 def get_path(exp):
+    home = os.getenv("HOME") + "/"
     path = {
-        "root_folder" : "/home/aacienfuegos/uni/IRIN/compulsory_2/evolutionIRIN/",
+        "root_folder" : home + "uni/IRIN/compulsory_2/evolutionIRIN/",
     }
     path["exp_folder"] = path["root_folder"] + "expFiles/exp" + str(exp) + "/"
     path["data_folder"] = path["root_folder"] + "outputFiles/"
