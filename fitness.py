@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def plot(path):
+    global df_all
+
     df = pd.read_csv(path["exp_folder"] + "fitness.log", sep=" \t ", header=3, names=["gen", "best", "avg", "worst"])
 
     plt.figure()
@@ -10,3 +12,16 @@ def plot(path):
     df.plot(x="gen")
 
     plt.savefig(path["exp_folder"] + "fitness" + ".png", bbox_inches='tight')
+
+
+def plot_all(path, experiments):
+    fig, ax = plt.subplots()
+    
+    for exp in experiments:
+        path["exp_folder"] = path["root_folder"] + "expFiles/exp" + str(exp) + "/"
+        names = ["gen", "best_exp"+str(exp), "avg_exp"+str(exp), "worst_exp"+str(exp)]
+        df = pd.read_csv(path["exp_folder"] + "fitness.log", sep=" \t ", header=3, names=names)
+        df.plot(x="gen", y=names[1], ax=ax)
+
+    plt.savefig(path["root_folder"] + "expFiles/fitness_all.png", bbox_inches='tight')
+        

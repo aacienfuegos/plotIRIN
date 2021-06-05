@@ -56,6 +56,9 @@ def main():
         fitness.plot(path)
         position.plot(path)
         sensors.plot(path)
+
+    fitness.plot_all(path, experiments)
+    
         
         
 if __name__ == "__main__":
