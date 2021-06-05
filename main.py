@@ -3,8 +3,8 @@ import shutil, tempfile
 import fitness, position, sensors
 
 exp_type = [None]
-for i in range(10): exp_type.append(21)
-for i in [8,10]: exp_type[i] = 24
+for i in range(10): exp_type.append(21)     # static
+for i in [8,10]: exp_type[i] = 24   # dynamic
 
 def get_path(exp):
     global path
