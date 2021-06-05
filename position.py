@@ -12,10 +12,14 @@ def plot(path):
     df["color"] = np.where(df_battery["lowBattery"]==1, "red", df["color"])
 
     bg = plt.imread("background.png")
+    # bg = plt.imread("frame.png")
 
+    # start plotting
     fig, ax = plt.subplots()
-    ax.set(xlim=(-1.5, 1.5), ylim=(-1.5, 1.5))
+
     ax.imshow(bg, extent=[-1.5, 1.5, -1.5, 1.5])
+    # ax.imshow(bg, extent=[-1.7, 1.7, -2, 2])
+
     df.plot(kind="scatter", x="x", y="y", color=df["color"], s=0.5, colorbar=False, ax=ax)
     plt.axis('off')
     plt.savefig(path["exp_folder"] + "position" + ".png", bbox_inches='tight')
