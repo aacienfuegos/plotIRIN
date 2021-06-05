@@ -44,7 +44,7 @@ def sim(exp_type, pfile):
 
 def main():
     global path
-    experiments = [1, 3, 7, 8]
+    experiments = [1, 3, 7, 9]
     run_time = 160
 
     for exp in experiments:
