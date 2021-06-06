@@ -14,6 +14,7 @@ def init_names():
     fitness = input("Name for fitness log graph [default: fitness.png]: ") or "fitness.png"
     fitness_all = input("Name for all fitness log graph [default: fitness_all.png]: ") or "fitness_all.png"
     position = input("Name for positions graph [default: position.png]: ") or "position.png"
+    position_random = input("Name for random positions graph [default: position_random.png]: ") or "position_random.png"
     sensors = input("Name for sensors graph [default: sensors.png]: ") or "sensors.png"
     
     names = {
@@ -42,6 +43,15 @@ def init_run_time():
         print("Run time must be an INTEGER number")
         init_run_time()
     
+def init_seed():
+    seed = input("Enter seed for random generation [default: 12341231]: ") or 12341231
+    try:
+        seed = int(seed)
+        return seed
+    except ValueError:
+        print("Seed must be an INTEGER number")
+        init_run_time()
+    
             
 
 def init_data():
@@ -49,6 +59,7 @@ def init_data():
     names = init_names()
     experiments = init_experiments()
     run_time = init_run_time()
+    seed = init_seed()
             
     data_dict = {
         "path" : {
@@ -56,7 +67,8 @@ def init_data():
         },
         "names" : names,
         "experiments" : experiments,
-        "run_time" : run_time
+        "run_time" : run_time,
+        "seed" : seed
     }
     with open("data.json", 'w') as data:
         json.dump(data_dict, data, indent=4, sort_keys=True)

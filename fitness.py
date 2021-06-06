@@ -2,8 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def plot(path, name):
-    global df_all
-
     df = pd.read_csv(path["exp_folder"] + "fitness.log", sep=" \t ", header=3, names=["gen", "best", "avg", "worst"])
 
     plt.figure()
