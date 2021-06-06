@@ -15,8 +15,5 @@ irsim
     │   ├── best1000.log
     ├── currentbest
     ├── fitness.log
-    ├── fitness.png
     ├── iriNeuronTesting.txt
-    ├── position.png
-    └── sensors.png
 ```
