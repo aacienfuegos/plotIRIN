@@ -6,7 +6,7 @@ It uses pandas, matplotlib and numpy.
 The first time you run the program it will prompt you for the path of the simulator and the experiments you want to plot.
 After you enter the data, it will create a json file, which will use for the following executions.
 
-# Directory Structure
+## Directory Structure
 Experiments MUST be saved inside the simulator folder using the following structure:
 ```
 irsim
