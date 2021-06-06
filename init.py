@@ -20,7 +20,7 @@ def init_experiments():
             
 
 def init_data():
-    # root_folder = init_root_folder()
+    root_folder = init_root_folder()
     root_folder = "/home/aacienfuegos/uni/IRIN/compulsory_2/evolutionIRIN/"
     experiments = init_experiments()
             
