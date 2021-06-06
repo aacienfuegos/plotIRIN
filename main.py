@@ -55,7 +55,7 @@ def main():
         
     path = data["path"]
     experiments = data["experiments"]
-    run_time = 160
+    run_time = data["run_time"]
 
     for exp in experiments:
         set_path(exp)

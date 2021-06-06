@@ -17,18 +17,30 @@ def init_experiments():
     except ValueError:
         print("Wrond format. Remember to enter NUMBERS separate by space")
         init_experiments()
+        
+def init_run_time():
+    run_time = input("How many seconds do you want to simulate? [default: 160]: ") or 160
+    try:
+        run_time = int(run_time)
+        return run_time
+    except ValueError:
+        print("Run time must be an INTEGER number")
+        init_run_time()
+    
             
 
 def init_data():
     root_folder = init_root_folder()
     root_folder = "/home/aacienfuegos/uni/IRIN/compulsory_2/evolutionIRIN/"
     experiments = init_experiments()
+    run_time = init_run_time()
             
     data_dict = {
         "path" : {
             "root_folder" : root_folder
         },
-        "experiments" : experiments
+        "experiments" : experiments,
+        "run_time" : run_time
     }
     with open("data.json", 'w') as data:
         json.dump(data_dict, data, indent=4, sort_keys=True)
