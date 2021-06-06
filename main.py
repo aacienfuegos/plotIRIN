@@ -2,6 +2,8 @@ from asyncio.subprocess import STDOUT
 import os, subprocess
 import json
 import shutil, tempfile
+
+from numpy import append
 import init
 import fitness, position, sensors
 
@@ -21,6 +23,9 @@ def clean():
     for f in os.listdir(path["data_folder"]):
         if(f != "README.md"):
             os.remove(path["data_folder"] + f)
+    for f in os.listdir(path["root_folder"] + "frame/"):
+        if(f != "README.md"):
+            os.remove(path["root_folder"] + "frame/" + f)
             
 def get_pfile(run_time, random):
     global path
@@ -40,28 +45,33 @@ def get_pfile(run_time, random):
 def get_bg():
     global path
     fd, temp_path = tempfile.mkstemp()
-
+    
     # shutil.copy("background.png", temp_path)
-    bg = path["root_folder"] + "frame/frame0001.ppm"
+    bg = path["root_folder"] + "frame/frame0002.ppm"
     cmd = "convert " + bg + " -gravity center -crop 774x774+0+0 +repage " + temp_path
     os.system(cmd)
     
     return fd, temp_path
     
 
-def sim(exp_type, seed, pfile):
+def sim(exp_type, seed, render, run_time, random):
     global path
+    clean()
+
+    pfile, pfile_path = get_pfile(run_time, random)
     
     DEVNULL = open(os.devnull, 'wb')
     
     # ./irsim -v -s 12341231 -E 21 -p expFiles/exp1/plot_param.txt -c expFiles/exp1/currentbest
-    command = ["./irsim", "-v",
-                "-s", str(seed),
-                "-E", str(exp_type),
-                "-p", pfile,
-                "-c", path["exp_folder"]+"currentbest"
-                ]
-    p = subprocess.Popen(command, cwd=path["root_folder"], stdout=DEVNULL, stderr=STDOUT)
+    command = ["./irsim"]
+    if(not render): command.append("-v")
+    command.extend(["-s", str(seed),
+                    "-E", str(exp_type),
+                    "-p", pfile_path,
+                    "-c", path["exp_folder"]+"currentbest"
+                    ])
+                
+    p = subprocess.Popen(command, cwd=path["root_folder"], stdout=DEVNULL, stderr=DEVNULL) 
     p.wait()
 
 def main():
@@ -84,21 +94,25 @@ def main():
 
     for exp in experiments:
         set_path(exp)
-        clean()
 
-        pfile, pfile_path = get_pfile(run_time, 0)
-        bg, bg_path = get_bg()
+        for random in range(2):
+            # Get bg image
+            sim(exp_type[exp], seed, True, 0.1, random)
+            bg, bg_path = get_bg()
 
-        sim(exp_type[exp], seed, pfile_path)
+            # Simulate exp
+            sim(exp_type[exp], seed, False, run_time, random)
+            filename = "position" 
+            if(random): filename += "_random"
+            position.plot(path, names[filename], bg_path)
+            
+            if(not random): sensors.plot(path, names["sensors"])
 
         fitness.plot(path, names["fitness"])
-        position.plot(path, names["position"], bg_path)
-        sensors.plot(path, names["sensors"])
 
-        os.close(pfile)
         os.close(bg)
 
-    fitness.plot_all(path, names["fitness_all"], experiments)
+    # fitness.plot_all(path, names["fitness_all"], experiments)
     
         
         

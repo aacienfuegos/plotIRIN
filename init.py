@@ -21,6 +21,7 @@ def init_names():
         "fitness" : fitness,
         "fitness_all" : fitness_all,
         "position" : position,
+        "position_random" : position_random,
         "sensors" : sensors,
     }
     return names
