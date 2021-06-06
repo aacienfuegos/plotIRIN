@@ -22,5 +22,4 @@ irsim
 ## Graphs
 At the moment these functions are availible:
 * Fitness:
-
-⋅⋅⋅It will plot the best, the average and the worst fitness of each generation using the file _fitness.log_
+...It will plot the best, the average and the worst fitness of each generation using the file _fitness.log_
