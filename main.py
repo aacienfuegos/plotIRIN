@@ -1,19 +1,19 @@
 import os, subprocess
+import json
 import shutil, tempfile
+import init
 import fitness, position, sensors
 
 exp_type = [None]
 for i in range(10): exp_type.append(21)     # static
 for i in [8,10]: exp_type[i] = 24   # dynamic
 
-def get_path(exp):
+
+def set_path(exp):
     global path
-    home = os.getenv("HOME") + "/"
-    path = {"root_folder" : home + "uni/IRIN/compulsory_2/evolutionIRIN/"}
+    # path = {"root_folder" : home + "uni/IRIN/compulsory_2/evolutionIRIN/"}
     path["exp_folder"] = path["root_folder"] + "expFiles/exp" + str(exp) + "/"
     path["data_folder"] = path["root_folder"] + "outputFiles/"
-    
-    return path
 
 def clean():
     global path
@@ -44,20 +44,30 @@ def sim(exp_type, pfile):
 
 def main():
     global path
-    experiments = [1, 3, 7, 9]
+
+    try:
+        with open("data.json") as f: data = json.load(f)
+    except IOError:
+        init.init_data()
+        with open("data.json") as f: data = json.load(f)
+    finally:
+        f.close()
+        
+    path = data["path"]
+    experiments = data["experiments"]
     run_time = 160
 
     for exp in experiments:
-        path = get_path(exp)
+        set_path(exp)
         clean()
         pfile, pfile_path = get_pfile(run_time)
         sim(exp_type[exp], pfile_path)
 
-        fitness.plot(path)
-        position.plot(path)
-        sensors.plot(path)
+        # fitness.plot(path)
+        # position.plot(path)
+        # sensors.plot(path)
 
-    fitness.plot_all(path, experiments)
+    # fitness.plot_all(path, experiments)
     
         
         
