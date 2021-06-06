@@ -63,11 +63,11 @@ def main():
         pfile, pfile_path = get_pfile(run_time)
         sim(exp_type[exp], pfile_path)
 
-        # fitness.plot(path)
-        # position.plot(path)
-        # sensors.plot(path)
+        fitness.plot(path)
+        position.plot(path)
+        sensors.plot(path)
 
-    # fitness.plot_all(path, experiments)
+    fitness.plot_all(path, experiments)
     
         
         
