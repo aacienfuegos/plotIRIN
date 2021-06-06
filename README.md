@@ -24,3 +24,13 @@ At the moment these functions are availible:
 * Fitness:
  
     It will plot the best, the average and the worst fitness of each generation using the file _fitness.log_
+
+
+    Also, there is a graph with the best fitness of each experiment
+* Position:
+
+    Plot a map of the scenarion with the positions of the robot. 
+    By default, it's simulated for 160 seconds
+* Sensors
+   1. Light Sensor, Blue Light Sensor and Ground Memory
+   2. Red Light Sensor and Red Battery
