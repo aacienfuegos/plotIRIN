@@ -1,3 +1,4 @@
+from asyncio.subprocess import STDOUT
 import os, subprocess
 import json
 import shutil, tempfile
@@ -39,13 +40,19 @@ def get_pfile(run_time, random):
 def random_map():
     return
 
-def sim(exp_type, pfile):
+def sim(exp_type, seed, pfile):
     global path
-    # ./irsim -v -E 21 -p expFiles/exp1/plot_param.txt -c expFiles/exp1/currentbest
-    command = ["./irsim", "-v", "-E", str(exp_type),
+    
+    DEVNULL = open(os.devnull, 'wb')
+    
+    # ./irsim -v -s 12341231 -E 21 -p expFiles/exp1/plot_param.txt -c expFiles/exp1/currentbest
+    command = ["./irsim", "-v",
+                "-s", str(seed),
+                "-E", str(exp_type),
                 "-p", pfile,
-                "-c", path["exp_folder"]+"currentbest"]
-    p = subprocess.Popen(command, cwd=path["root_folder"])
+                "-c", path["exp_folder"]+"currentbest"
+                ]
+    p = subprocess.Popen(command, cwd=path["root_folder"], stdout=DEVNULL, stderr=STDOUT)
     p.wait()
 
 def main():
@@ -63,12 +70,13 @@ def main():
     names = data["names"]
     experiments = data["experiments"]
     run_time = data["run_time"]
+    seed = data["seed"]
 
     for exp in experiments:
         set_path(exp)
         clean()
         pfile, pfile_path = get_pfile(run_time, 0)
-        sim(exp_type[exp], pfile_path)
+        sim(exp_type[exp], seed, pfile_path)
 
         fitness.plot(path, names["fitness"])
         position.plot(path, names["position"])
