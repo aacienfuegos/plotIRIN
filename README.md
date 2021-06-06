@@ -11,9 +11,15 @@ Experiments MUST be saved inside the simulator folder using the following struct
 ```
 irsim
 ├── expFiles
-    ├── best
-    │   ├── best1000.log
-    ├── currentbest
-    ├── fitness.log
-    ├── iriNeuronTesting.txt
+    ├── exp1
+        ├── best
+        │   ├── best1000.log
+        ├── currentbest
+        ├── fitness.log
+        ├── iriNeuronTesting.txt
 ```
+
+## Graphs
+At the moment these functions are availible:
+* Fitness
+It will plot the best, the average and the worst fitness of each generation using the file _fitness.log_
