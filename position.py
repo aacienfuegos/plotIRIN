@@ -3,7 +3,7 @@ import numpy as np
 from pandas.plotting import scatter_matrix
 import matplotlib.pyplot as plt
 
-def plot(path, name):
+def plot(path, name, bg_path):
     df = pd.read_csv(path["data_folder"] + "robotPosition", sep=" ", header=None, names=["t", "x", "y", "theta"])
     df_sensors = pd.read_csv(path["data_folder"] + "robotSensors", index_col=False, sep=" ", header=None, names=["t", "light", "bluelight", "redlight", "groundmemory", "redbattery"])
     df_battery = pd.read_csv(path["data_folder"] + "robotBattery", sep=" ", header=None, names=["t", "lowBattery"])
@@ -11,8 +11,8 @@ def plot(path, name):
     df["color"] = np.where(df_sensors["groundmemory"]==1, "blue", "white")
     df["color"] = np.where(df_battery["lowBattery"]==1, "red", df["color"])
 
-    bg = plt.imread("background.png")
-    # bg = plt.imread("frame.png")
+    bg = plt.imread(bg_path)
+    # bg = plt.imread(bg_path)
 
     # start plotting
     fig, ax = plt.subplots()

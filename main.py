@@ -37,8 +37,17 @@ def get_pfile(run_time, random):
     
     return  fd, temp_path
 
-def random_map():
-    return
+def get_bg():
+    global path
+    fd, temp_path = tempfile.mkstemp()
+
+    # shutil.copy("background.png", temp_path)
+    bg = path["root_folder"] + "frame/frame0001.ppm"
+    cmd = "convert " + bg + " -gravity center -crop 774x774+0+0 +repage " + temp_path
+    os.system(cmd)
+    
+    return fd, temp_path
+    
 
 def sim(exp_type, seed, pfile):
     global path
@@ -72,15 +81,22 @@ def main():
     run_time = data["run_time"]
     seed = data["seed"]
 
+
     for exp in experiments:
         set_path(exp)
         clean()
+
         pfile, pfile_path = get_pfile(run_time, 0)
+        bg, bg_path = get_bg()
+
         sim(exp_type[exp], seed, pfile_path)
 
         fitness.plot(path, names["fitness"])
-        position.plot(path, names["position"])
+        position.plot(path, names["position"], bg_path)
         sensors.plot(path, names["sensors"])
+
+        os.close(pfile)
+        os.close(bg)
 
     fitness.plot_all(path, names["fitness_all"], experiments)
     
