@@ -3,7 +3,7 @@ import numpy as np
 from pandas.plotting import scatter_matrix
 import matplotlib.pyplot as plt
 
-def plot(path):
+def plot(path, name):
     df = pd.read_csv(path["data_folder"] + "robotPosition", sep=" ", header=None, names=["t", "x", "y", "theta"])
     df_sensors = pd.read_csv(path["data_folder"] + "robotSensors", index_col=False, sep=" ", header=None, names=["t", "light", "bluelight", "redlight", "groundmemory", "redbattery"])
     df_battery = pd.read_csv(path["data_folder"] + "robotBattery", sep=" ", header=None, names=["t", "lowBattery"])
@@ -22,4 +22,4 @@ def plot(path):
 
     df.plot(kind="scatter", x="x", y="y", color=df["color"], s=0.5, colorbar=False, ax=ax)
     plt.axis('off')
-    plt.savefig(path["exp_folder"] + "position" + ".png", bbox_inches='tight')
+    plt.savefig(path["exp_folder"] + name, bbox_inches='tight')

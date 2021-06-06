@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def plot(path):
+def plot(path, name):
     df = pd.read_csv(path["data_folder"] + "robotSensors", index_col=False, sep=" ", header=None, names=["t", "light", "bluelight", "redlight", "groundmemory", "redbattery"])
 
     fig, ax = plt.subplots(2)
@@ -11,4 +11,4 @@ def plot(path):
 
     df.plot(x="t", y="redlight", color="tab:red", ax=ax[1])
     df.plot(x="t", y="redbattery", color="tab:green", ax=ax[1])
-    plt.savefig(path["exp_folder"] + "sensors" + ".png", bbox_inches='tight')
+    plt.savefig(path["exp_folder"] + name, bbox_inches='tight')

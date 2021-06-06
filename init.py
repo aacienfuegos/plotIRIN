@@ -1,13 +1,28 @@
 import os, json
 
 def init_root_folder():
-    root_folder = input("Enter path of the simulator: ")
+    default = os.getenv("HOME") + "/uni/IRIN/compulsory_2/evolutionIRIN"
+    root_folder = input("Enter path of the simulator [default: " + default + "]: ") or default
     if(root_folder[-1]!='/'): root_folder += '/'
     if(os.path.isfile(root_folder+"irsim")):
         return root_folder
     else:
         print("Simulator not found")
         init_root_folder()
+        
+def init_names():
+    fitness = input("Name for fitness log graph [default: fitness.png]: ") or "fitness.png"
+    fitness_all = input("Name for all fitness log graph [default: fitness_all.png]: ") or "fitness_all.png"
+    position = input("Name for positions graph [default: position.png]: ") or "position.png"
+    sensors = input("Name for sensors graph [default: sensors.png]: ") or "sensors.png"
+    
+    names = {
+        "fitness" : fitness,
+        "fitness_all" : fitness_all,
+        "position" : position,
+        "sensors" : sensors,
+    }
+    return names
 
 def init_experiments():
     experiments = input("Enter experiments to run: ").split()
@@ -31,7 +46,7 @@ def init_run_time():
 
 def init_data():
     root_folder = init_root_folder()
-    root_folder = "/home/aacienfuegos/uni/IRIN/compulsory_2/evolutionIRIN/"
+    names = init_names()
     experiments = init_experiments()
     run_time = init_run_time()
             
@@ -39,6 +54,7 @@ def init_data():
         "path" : {
             "root_folder" : root_folder
         },
+        "names" : names,
         "experiments" : experiments,
         "run_time" : run_time
     }

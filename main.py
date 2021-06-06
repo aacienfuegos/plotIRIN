@@ -21,17 +21,23 @@ def clean():
         if(f != "README.md"):
             os.remove(path["data_folder"] + f)
             
-def get_pfile(run_time):
+def get_pfile(run_time, random):
     global path
     fd, temp_path = tempfile.mkstemp()
     pfile = path["exp_folder"] + "iriNeuronTesting.txt"
     shutil.copy(pfile, temp_path)
 
-    # sed -i "s/RUN TIME.*/RUN TIME = 160/g" iriNeuronTesting.txt
-    cmd = "sed -i 's/RUN TIME.*/RUN TIME = "+str(run_time) + "/g' "+temp_path
+    # sed '/RUN TIME/ s/[^=]\{1,\}$/ 160/; /RANDOM POSITION/ s/[^=]\{1,\}$/ 1/;'
+    cmd = "sed -i '"
+    cmd += "/RUN TIME/ s/[^=]\{1,\}$/ " + str(run_time) + "/; "
+    cmd += "/RANDOM POSITION/ s/[^=]\{1,\}$/ " + str(random) + "/;"
+    cmd += "' " + temp_path
     os.system(cmd)
     
     return  fd, temp_path
+
+def random_map():
+    return
 
 def sim(exp_type, pfile):
     global path
@@ -54,20 +60,21 @@ def main():
         f.close()
         
     path = data["path"]
+    names = data["names"]
     experiments = data["experiments"]
     run_time = data["run_time"]
 
     for exp in experiments:
         set_path(exp)
         clean()
-        pfile, pfile_path = get_pfile(run_time)
+        pfile, pfile_path = get_pfile(run_time, 0)
         sim(exp_type[exp], pfile_path)
 
-        fitness.plot(path)
-        position.plot(path)
-        sensors.plot(path)
+        fitness.plot(path, names["fitness"])
+        position.plot(path, names["position"])
+        sensors.plot(path, names["sensors"])
 
-    fitness.plot_all(path, experiments)
+    fitness.plot_all(path, names["fitness_all"], experiments)
     
         
         
