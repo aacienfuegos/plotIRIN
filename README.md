@@ -13,13 +13,6 @@ irsim
 ├── expFiles
     ├── best
     │   ├── best1000.log
-    │   ├── best200.log
-    │   ├── best2000.log
-    │   ├── best4000.log
-    │   ├── best500.log
-    │   ├── best5000.log
-    │   ├── best6000.log
-    │   └── best8000.log
     ├── currentbest
     ├── fitness.log
     ├── fitness.png
